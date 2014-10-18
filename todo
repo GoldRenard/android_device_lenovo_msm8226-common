@@ -1,0 +1,3 @@
+etc/init.nxp.nfc.sh
+etc/init.lenovo.wifi.sh
+etc/hcidump.sh

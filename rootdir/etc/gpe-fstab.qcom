@@ -11,6 +11,5 @@
 /dev/block/platform/msm_sdcc.1/by-name/boot         /boot        		emmc    defaults                                                                       recoveryonly
 /dev/block/platform/msm_sdcc.1/by-name/recovery     /recovery    		emmc    defaults                                                                       recoveryonly
 /devices/msm_sdcc.2/mmc_host                 		/storage/sdcard1	vfat    nosuid,nodev                                                                   wait,noemulatedsd,voldmanaged=sdcard1:auto
-/dev/block/platform/msm_sdcc.1/by-name/preload      /preload      		ext4	ro,barrier=1,discard                                                           wait
 /devices/platform/msm_hsusb_host                    auto         		auto    defaults                                                                       voldmanaged=usbdisk:auto
 /dev/block/zram0                                    none         		swap    defaults                                                                       zramsize=134217728

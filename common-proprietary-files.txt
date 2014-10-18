@@ -37,8 +37,6 @@ etc/acdbdata/QRD/QRD_Handset_cal.acdb
 etc/acdbdata/QRD/QRD_Hdmi_cal.acdb
 etc/acdbdata/QRD/QRD_Headset_cal.acdb
 etc/acdbdata/QRD/QRD_Speaker_cal.acdb
-etc/firmware/wcd9306/wcd9306_anc.bin
-etc/firmware/wcd9306/wcd9306_mbhc.bin
 
 lib/hw/audio_policy.msm8226.so
 lib/hw/audio.primary.msm8226.so
@@ -520,7 +518,7 @@ bin/nl_listener
 bin/port-bridge
 vendor/lib/libalarmservice_jni.so
 vendor/lib/libxml.so
-#NOT_SURE vendor/lib//hw/power.qcom.so
+vendor/lib/hw/power.qcom.so
 vendor/lib/libc2d30-a4xx.so
 vendor/lib/libcneapiclient.so
 vendor/lib/libcneconn.so
@@ -660,92 +658,94 @@ bin/writeconfig
 bin/xtwifi-client
 bin/xtwifi-inet-agent
 
-#NOT_SURE lib/libebtable_broute.so
-#NOT_SURE lib/libebtable_filter.so
-#NOT_SURE lib/libebtable_nat.so
-#NOT_SURE lib/libamapv301ex.so
-#NOT_SURE lib/libamapv301.so
-#NOT_SURE lib/libEGL_orig.so
-#NOT_SURE lib/libGLESv1_CM_orig.so
-#NOT_SURE lib/libGLESv2_orig.so
+#NOT_SURE_"proprietaries"? Just grabbed from stock which not found in out CM build
 
-#NOT_SURE lib/libaiengine-arm-and.so
-#NOT_SURE lib/liballjoyn.so
-#NOT_SURE lib/libantradio.so
-#NOT_SURE lib/libAppDataSearch.so
-#NOT_SURE lib/libassd.so
-#NOT_SURE lib/libavcommon.so
-#NOT_SURE lib/libblur.so
-#NOT_SURE lib/libcimax_spi.so
-#NOT_SURE lib/libcnefeatureconfig.so
-#NOT_SURE lib/libcrashreporter.so
-#NOT_SURE lib/libdocscanner_image.so
-#NOT_SURE lib/libdocsimageutils.so
-#NOT_SURE lib/libexif_jni.so
-#NOT_SURE lib/libextendedremotedisplay.so
-#NOT_SURE lib/libfastpay.so
-#NOT_SURE lib/libfile.so
-#NOT_SURE lib/libfilterframework_jni.so
-#NOT_SURE lib/libfilterpack_facedetect.so
-#NOT_SURE lib/libframesequence.so
-#NOT_SURE lib/libFreqFilter.so
-#NOT_SURE lib/libfrsdk.so
-#NOT_SURE lib/libgames_rtmp_jni.so
-#NOT_SURE lib/libgcastv2_base.so
-#NOT_SURE lib/libgcastv2_support.so
-#NOT_SURE lib/libgnustl_shared.so
-#NOT_SURE lib/libgoogle_hotword_jni.so
-#NOT_SURE lib/libhiddencode.so
-#NOT_SURE lib/libhwr.so
-#NOT_SURE lib/libImgFun.so
-#NOT_SURE lib/libImgFun_Theme.so
-#NOT_SURE lib/libInCallBlur.so
-#NOT_SURE lib/libIndoorLoc.so
-#NOT_SURE lib/libjgcastservice.so
-#NOT_SURE lib/libjni_delight.so
-#NOT_SURE lib/libjni_hmm_shared_engine.so
-#NOT_SURE lib/libjni_mosaicx.so
-#NOT_SURE lib/libLeCSCJni.so
-#NOT_SURE lib/libLeCSC.so
-#NOT_SURE lib/libLeImageJni.so
-#NOT_SURE lib/libLeImage.so
-#NOT_SURE lib/libLejpeg.so
-#NOT_SURE lib/libLeskia.so
-#NOT_SURE lib/liblitedes.so
-#NOT_SURE lib/liblocSDK3.so
-#NOT_SURE lib/liblocSDK4.so
-#NOT_SURE lib/libloc_xtra.so
-#NOT_SURE lib/libm2ts_player.so
-#NOT_SURE lib/libMapInterfaceSo.so
-#NOT_SURE lib/libmbsutils.so
-#NOT_SURE lib/libMcClient.so
-#NOT_SURE lib/libMcRegistry.so
-#NOT_SURE lib/libminui.so
-#NOT_SURE lib/libmmcamera_interface.so
-#NOT_SURE lib/libmoviemaker-jni.so
-#NOT_SURE lib/libMusicHunterClient.so
-#NOT_SURE lib/libnetjni.so
-#NOT_SURE lib/libnetqinantivirus.so
-#NOT_SURE lib/libocrclient.so
-#NOT_SURE lib/libpatts_engine_jni_api_ub.210030103.so
-#NOT_SURE lib/libphotoeditor_native.so
-#NOT_SURE lib/libpinyin_data_bundle.so
-#NOT_SURE lib/libRecordCs.so
-#NOT_SURE lib/librectifier.so
-#NOT_SURE lib/libsecretcode.so
-#NOT_SURE lib/libspeexwrapper.so
-#NOT_SURE lib/libsql.so
-#NOT_SURE lib/libstm-log.so
-#NOT_SURE lib/libtinyxml2.so
-#NOT_SURE lib/libtinyxml.so
-#NOT_SURE lib/libusedes.so
-#NOT_SURE lib/libvcdecoder_jni.so
-#NOT_SURE lib/libvideochat_jni.so
-#NOT_SURE lib/libvlife_AESCipher.so
-#NOT_SURE lib/libvlife_ffmpeg.so
-#NOT_SURE lib/libvlife_openglutil.so
-#NOT_SURE lib/libvlife_render.so
-#NOT_SURE lib/libvlife_sdl.so
-#NOT_SURE lib/libwebp_android.so
-#NOT_SURE lib/libwebrtc_audio_coding.so
-#NOT_SURE lib/libzhuyin_data_bundle.so
+lib/libebtable_broute.so
+lib/libebtable_filter.so
+lib/libebtable_nat.so
+lib/libamapv301ex.so
+lib/libamapv301.so
+lib/libEGL_orig.so
+lib/libGLESv1_CM_orig.so
+lib/libGLESv2_orig.so
+
+lib/libaiengine-arm-and.so
+lib/liballjoyn.so
+lib/libantradio.so
+lib/libAppDataSearch.so
+lib/libassd.so
+lib/libavcommon.so
+lib/libblur.so
+lib/libcimax_spi.so
+lib/libcnefeatureconfig.so
+lib/libcrashreporter.so
+lib/libdocscanner_image.so
+lib/libdocsimageutils.so
+lib/libexif_jni.so
+lib/libextendedremotedisplay.so
+lib/libfastpay.so
+lib/libfile.so
+lib/libfilterframework_jni.so
+lib/libfilterpack_facedetect.so
+lib/libframesequence.so
+lib/libFreqFilter.so
+lib/libfrsdk.so
+lib/libgames_rtmp_jni.so
+lib/libgcastv2_base.so
+lib/libgcastv2_support.so
+lib/libgnustl_shared.so
+lib/libgoogle_hotword_jni.so
+lib/libhiddencode.so
+lib/libhwr.so
+lib/libImgFun.so
+lib/libImgFun_Theme.so
+lib/libInCallBlur.so
+lib/libIndoorLoc.so
+lib/libjgcastservice.so
+lib/libjni_delight.so
+lib/libjni_hmm_shared_engine.so
+lib/libjni_mosaicx.so
+lib/libLeCSCJni.so
+lib/libLeCSC.so
+lib/libLeImageJni.so
+lib/libLeImage.so
+lib/libLejpeg.so
+lib/libLeskia.so
+lib/liblitedes.so
+lib/liblocSDK3.so
+lib/liblocSDK4.so
+lib/libloc_xtra.so
+lib/libm2ts_player.so
+lib/libMapInterfaceSo.so
+lib/libmbsutils.so
+lib/libMcClient.so
+lib/libMcRegistry.so
+lib/libminui.so
+lib/libmmcamera_interface.so
+lib/libmoviemaker-jni.so
+lib/libMusicHunterClient.so
+lib/libnetjni.so
+lib/libnetqinantivirus.so
+lib/libocrclient.so
+lib/libpatts_engine_jni_api_ub.210030103.so
+lib/libphotoeditor_native.so
+lib/libpinyin_data_bundle.so
+lib/libRecordCs.so
+lib/librectifier.so
+lib/libsecretcode.so
+lib/libspeexwrapper.so
+lib/libsql.so
+lib/libstm-log.so
+lib/libtinyxml2.so
+lib/libtinyxml.so
+lib/libusedes.so
+lib/libvcdecoder_jni.so
+lib/libvideochat_jni.so
+lib/libvlife_AESCipher.so
+lib/libvlife_ffmpeg.so
+lib/libvlife_openglutil.so
+lib/libvlife_render.so
+lib/libvlife_sdl.so
+lib/libwebp_android.so
+lib/libwebrtc_audio_coding.so
+lib/libzhuyin_data_bundle.so

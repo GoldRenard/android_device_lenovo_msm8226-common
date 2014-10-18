@@ -32,12 +32,17 @@ import init.mmi.rc
 on early-init
     mkdir /firmware 0771 system system
     symlink /data/tombstones /tombstones
+    write /sys/kernel/mm/ksm/pages_to_scan 100
+    write /sys/kernel/mm/ksm/sleep_millisecs 500
+    write /sys/kernel/mm/ksm/deferred_timer 1
+    write /sys/kernel/mm/ksm/run 1
 
 on init
     chmod 755 /gpecheck.sh
     exec /gpecheck.sh
     # CM: We use our own ril-daemon service definition, see mmi-ril-daemon
     stop ril-daemon
+    write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
 
 on fs
     mount_all fstab.qcom
@@ -46,12 +51,15 @@ on fs
     # these partition flashed on the device. Failure to mount any partition in fstab file
     # results in failure to launch late-start class.
 
+    # It should mount by fstab.qcom
+    #wait /dev/block/platform/msm_sdcc.1/by-name/cache
+    #mount ext4 /dev/block/platform/msm_sdcc.1/by-name/cache /cache nosuid nodev barrier=1
+
     wait /dev/block/platform/msm_sdcc.1/by-name/persist
     mount ext4 /dev/block/platform/msm_sdcc.1/by-name/persist /persist nosuid nodev barrier=1
 
     wait /dev/block/platform/msm_sdcc.1/by-name/modem
-    exec /system/bin/resize2fs /dev/block/platform/msm_sdcc.1/by-name/modem
-    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/modem /firmware ro nosuid nodev barrier=0
+    mount vfat /dev/block/platform/msm_sdcc.1/by-name/modem /firmware ro shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337
     write /sys/kernel/boot_adsp/boot 1
 
 on post-fs-data
@@ -63,15 +71,24 @@ on post-fs
     # Mount PDS
     wait /dev/block/platform/msm_sdcc.1/by-name/pds
     exec /system/bin/mount_pds.sh
+    # import cne init file
+    export LD_PRELOAD /vendor/lib/libNimsWrap.so
 
 
 on boot
+    start imsqmidaemon
+    insmod /system/lib/modules/adsprpc.ko
     # Enable writing to led blink node from userspace
     chown system system /sys/class/leds/red/blink
     chown system system /sys/class/leds/green/blink
     # Enable writing to brightness node under torch-light from userspace
     chown system system /sys/class/leds/torch-light/brightness
     chmod 0666 /sys/class/leds/torch-light/brightness
+
+    # Enable Focaltech touch controller auto firmware update
+    write /sys/bus/i2c/drivers/ft5x06_ts/5-0038/update_fw 1
+    # treat anonymous and file page the same priority
+    write /proc/sys/vm/swappiness 100
 
     # vibrator intensity
     chown system system /sys/devices/virtual/timed_output/vibrator/vtg_level
@@ -84,6 +101,10 @@ on boot
     mkdir /cache/trace 0777 root shell
     chown root shell /cache/trace
     chmod 0777 /cache/trace
+
+#Start the qcom-system-daemon service
+service qcomsysd /system/bin/qcom-system-daemon
+    class main
 
 #start camera server as daemon
 service qcamerasvr /system/bin/mm-qcamera-daemon
@@ -150,10 +171,37 @@ service adsprpcd /system/bin/adsprpcd
    user media
    group media
 
+service imsqmidaemon /system/bin/imsqmidaemon
+    class main
+    user system
+    socket ims_qmid stream 0660 system radio
+    group ims radio net_raw log qcom_diag
+    disabled
+
+service imsdatadaemon /system/bin/imsdatadaemon
+    class main
+    user system
+    socket ims_datad stream 0660 system radio
+    group system ims wifi radio inet net_raw log qcom_diag net_admin
+    disabled
+
+on property:sys.ims.QMI_DAEMON_STATUS=1
+    start imsdatadaemon
+
+service ims_rtp_daemon /system/bin/ims_rtp_daemon
+   class main
+   user system
+   socket ims_rtpd stream 0660 system ims
+   group ims net_raw diag qcom_diag log
+   disabled
+
+on property:sys.ims.DATA_DAEMON_STATUS=1
+    start ims_rtp_daemon
+
 service wcnss-service /system/bin/wcnss_service
    class late_start
    user root
-   group system wifi
+   group system wifi radio
    oneshot
 
 service ppd /system/bin/mm-pp-daemon
@@ -164,6 +212,21 @@ service ppd /system/bin/mm-pp-daemon
 
 on property:init.svc.surfaceflinger=stopped
     stop ppd
+
+on property:persist.sys.dloadmode.config=1
+   write /sys/module/restart/parameters/download_mode 1
+   write /sys/module/restart/parameters/emergent_restart 1
+   write /sys/bus/msm_subsys/devices/subsys0/restart_level system
+   write /sys/bus/msm_subsys/devices/subsys1/restart_level system
+   write /sys/bus/msm_subsys/devices/subsys2/restart_level system
+   write /sys/bus/msm_subsys/devices/subsys3/restart_level system
+
+on property:persist.sys.dloadmode.config=0
+   write /sys/module/restart/parameters/download_mode 0
+   write /sys/bus/msm_subsys/devices/subsys0/restart_level related
+   write /sys/bus/msm_subsys/devices/subsys1/restart_level related
+   write /sys/bus/msm_subsys/devices/subsys2/restart_level related
+   write /sys/bus/msm_subsys/devices/subsys3/restart_level related
 
 service mmi-ril-daemon /system/bin/rild
     class main

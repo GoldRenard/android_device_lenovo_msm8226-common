@@ -24,6 +24,12 @@ ifeq ($(TARGET_BOARD_PLATFORM),msm8226)
 
 LOCAL_PATH := $(call my-dir)
 
+$(shell mkdir -p $(TARGET_OUT_ETC)/firmware/wcd9306; \
+    ln -sf /data/misc/audio/wcd9320_anc.bin \
+    $(TARGET_OUT_ETC)/firmware/wcd9306/wcd9306_anc.bin; \
+    ln -sf /data/misc/audio/mbhc.bin \
+    $(TARGET_OUT_ETC)/firmware/wcd9306/wcd9306_mbhc.bin)
+
 include $(CLEAR_VARS)
 LOCAL_MODULE := wpa_supplicant_overlay.conf
 LOCAL_MODULE_TAGS := optional

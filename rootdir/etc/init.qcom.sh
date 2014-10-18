@@ -164,8 +164,7 @@ if [ "$izat_service_pip" -ne 0 ]; then
     start quipc_igsn
 fi
 
-# Qcom sensor support disabled
-# start_sensors
+start_sensors
 
 case "$target" in
     "msm7630_surf" | "msm7630_1x" | "msm7630_fusion")
